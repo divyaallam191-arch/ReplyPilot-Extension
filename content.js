@@ -57,7 +57,43 @@ function createToneSelector() {
         selector.appendChild(option);
     });
 
+    
+    // Default tone
     selector.value = 'friendly';
+
+    // Save the selected tone whenever the user changes it
+    selector.addEventListener('change', () => {
+        selector.dataset.userChanged = 'true';
+
+        chrome.storage.local.set({
+            replyTone: selector.value
+        }).catch(error => {
+            console.error('Failed to save reply tone:', error);
+        });
+    });
+
+    // Restore the previously saved tone
+    chrome.storage.local.get('replyTone', (result) => {
+        const savedTone = result.replyTone;
+
+        const validTones = [
+            'friendly',
+            'professional',
+            'casual',
+            'formal',
+            'apologetic',
+            'concise'
+        ];
+
+        // Don't overwrite a selection the user just made
+        if (
+            !selector.dataset.userChanged &&
+            validTones.includes(savedTone)
+        ) {
+            selector.value = savedTone;
+        }
+    });
+
 
 
     selector.style.cssText = `

@@ -4,7 +4,13 @@
     "description":"AI-powered email reply generator",
     "version":"1.0",
     "manifest_version":3,
-    "permissions":["activeTab","storage"],
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+
+     "permissions": ["storage"],
     "host_permissions":[
         "https://replypilot-backend-kjxi.onrender.com/*",
         "*://mail.google.com/*" 
